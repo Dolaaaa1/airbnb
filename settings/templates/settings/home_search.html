@@ -20,23 +20,10 @@
 <section class="ftco-section ftco-degree-bg">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-3 sidebar">
-				<div class="sidebar-wrap bg-light ftco-animate">
-					<h3 class="heading mb-4">Find City</h3>
-					<form class="form">
-						{% csrf_token %}
-						{% bootstrap_form filter.form %}
-						{% buttons %}
-						<button type="submit" class="btn btn-primary">Search</button>
-						{% endbuttons %}
-					</form>
-				</div>
-
-			</div>
 			<div class="col-lg-9">
 				<div class="row">
-				{% for property in object_list %}
-					<div class="col-sm-6 col-md-6 col-lg-20 ftco-animate">
+					{% for property in property_list %}
+					 <div class="col-sm-12 col-md-12 col-lg-20  ftco-animate">
 						<div class="destination">
 							<a href="{{property.get_absolute_url}}"
 								class="img img-2 d-flex justify-content-center align-items-center"
@@ -59,8 +46,7 @@
 										</p>
 									</div>
 									<div class="two">
-										<span
-											class="price per-price">${{property.price}}<br><small>/night</small></span>
+										<span class="price per-price">${{property.price}}<br><small>/night</small></span>
 									</div>
 								</div>
 								<p>{{property.description|safe|truncatewords:3}}</p>
@@ -71,39 +57,41 @@
 								</p>
 							</div>
 						</div>
-					</div>
-				{% endfor %}
+					 </div>
+					{% empty %} 
+					  <h5> no result </h5>
+					{% endfor %}
 
 				</div>
-				{% if is_paginated %}
+                {% if is_paginated %}
 				<div class="row mt-5">
 					<div class="col text-center">
 						<div class="block-27">
 							<ul>
 								{% if page_obj.has_previous %}
-								<li><a href="?page={{page_obj.previous_page_number}}">&lt;</a></li>
+								 <li><a href="?page={{page_obj.previous_page_number}}">&lt;</a></li>
 								{% else %}
-								<li class="disabled"><span>&lt;</span></li>
+								 <li class="disabled"><span>&lt;</span></li>								
 								{% endif %}
-								{% for i in paginator.page_range %}
-								{% if  page_obj.number == i %}
-								<li class="active"><span>1</span></li>
-								{% else %}
-								<li><a href="?page={{i}}">{{i}}</a></li>
-								{% endif %}
+                                {% for i in paginator.page_range %}
+								  {% if  page_obj.number == i %}
+								    <li class="active"><span>1</span></li>
+								  {% else %}	
+								   <li><a href="?page={{i}}">{{i}}</a></li>
+								  {% endif %}
 
 								{% endfor %}
 
-								{%if page_obj.has_next %}
-								<li><a href="?page={{page_obj.next_page_number}}">&gt;</a></li>
+                                {%if page_obj.has_next %}
+								 <li><a href="?page={{page_obj.next_page_number}}">&gt;</a></li>
 								{%else%}
-								<li class="disabled"><span>&lt;</span></li>
+								 <li class="disabled"><span>&lt;</span></li>
 								{% endif %}
 							</ul>
 						</div>
 					</div>
 				</div>
-				{% endif %}
+               {% endif %}
 			</div> <!-- .col-md-8 -->
 		</div>
 	</div>

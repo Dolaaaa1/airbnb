@@ -55,6 +55,7 @@ class Place(models.Model):
     
 class Category(models.Model):
     name= models.CharField(max_length=50) 
+    icon = models.CharField(max_length=30)
 
     def __str__(self):
         return self.name   
