@@ -1,10 +1,11 @@
 from django.shortcuts import render ,redirect
-from django.views.generic import ListView ,DetailView
+from django.views.generic import ListView ,DetailView ,CreateView
 from .models import  Category,Property
 from django.views.generic.edit import FormMixin
 from .forms import PropertyBookForm
 from .filters import PropertyFilter
 from django_filters.views import FilterView
+
 
 # Create your views here.
 
@@ -23,7 +24,7 @@ class PropertyDetail(FormMixin,DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["related"] = Property.objects.filter(category=self.get_object().category)[:1] 
+        context["related"] = Property.objects.filter(category=self.get_object().category)[:2] 
         return context
     
     def post(self,request,*args,**kwargs):
@@ -35,6 +36,11 @@ class PropertyDetail(FormMixin,DetailView):
             myform.save()
             
             return redirect('/')
+        
+        
+        
+class AddListing(CreateView):
+    pass        
     
 
 
