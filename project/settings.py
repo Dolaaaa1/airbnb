@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -40,7 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     
     
-    'accounts',
+
     'blog',
     'property',
     'about',
@@ -49,6 +51,15 @@ INSTALLED_APPS = [
     'django_summernote',
     "bootstrap4",
     'django_filters',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    
+
 ]
 
 MIDDLEWARE = [
@@ -60,6 +71,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = "project.urls"
