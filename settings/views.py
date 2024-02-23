@@ -4,6 +4,10 @@ from django.db.models.query_utils import Q
 from django.db.models import Count
 from blog.models import Post
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
+from .tasks import send_mail_task
+from .models import Settings
 
 # Create your views here.
 
@@ -52,4 +56,17 @@ def category_filter(request ,category):
 
 
 def contact_us(request):
-    pass
+    site_info = Settings.objects.last()
+    
+    if request.method == 'POST':
+        subject = request.POST['subject']
+        name = request.POST['name']
+        email = request.POST['email']
+        message = request.POST['message']
+        
+        send_mail_task.delay(subject ,name ,message,email)
+        
+        
+        
+        
+    return render(request,'settings/contact.html',{'site_info':site_info})   
