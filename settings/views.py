@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from property.models import Place ,Property ,Category
+from property.models import Place ,Property ,Category , PropertyBook
 from django.db.models.query_utils import Q
 from django.db.models import Count
 from blog.models import Post
@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .tasks import send_mail_task
 from .models import Settings
+
 
 # Create your views here.
 
@@ -70,3 +71,27 @@ def contact_us(request):
         
         
     return render(request,'settings/contact.html',{'site_info':site_info})   
+
+
+
+def dashboard(request):
+    users_count = User.objects.all().count()
+    places_count = Property.objects.filter(category__name ='Places').count()
+    resturant_count = Property.objects.filter(category__name ='Restaurant').count()
+    hotels_count = Property.objects.filter(category__name ='Hotels').count()
+    posts = Post.objects.all().count()
+    booking = PropertyBook.objects.all().count()
+    
+    
+    
+    
+    
+    return render(request,'settings/dashboard.html',{
+        'users_count':users_count,
+        'places_count':places_count,
+        'resturant_count': resturant_count,
+        'hotels_count':hotels_count,
+        'posts':posts,
+        'booking':booking,
+ 
+          })

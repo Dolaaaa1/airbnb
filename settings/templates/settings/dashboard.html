@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+
+
+<div class="hero-wrap js-fullheight" style="background-image: url({% static 'images/bg_2.jpg' %});">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
+            data-scrollax-parent="true">
+            <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+                <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                        class="mr-2"><a href="index.html">Home</a></span> <span>Contact</span></p>
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Dashboard</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section contact-section ftco-degree-bg">
+    <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+    </div>
+</section>
+<div class="col-md-6">
+    <canvas id="myChart"></canvas>
+</div>
+<div class="col-md-6">
+    <canvas id="myChart2"></canvas>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Posts', 'Places', 'Restaurant', 'Hotels', 'Book', 'User'],
+        datasets: [{
+          label: 'Count',
+          data: [{{posts}}, {{places_count}}, {{resturant_count}}, {{hotels_count}}, {{booking}}, {{users_count}}],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+
+
+    const ctx2 = document.getElementById('myChart2');
+    new Chart(ctx2, {
+        type: 'pie',
+        data: {
+          labels: ['Posts', 'Places', 'Restaurant', 'Hotels', 'Book', 'User'],
+          datasets: [{
+            label: 'Count',
+            data: [{{posts}}, {{places_count}}, {{resturant_count}}, {{hotels_count}}, {{booking}}, {{users_count}}],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+
+  </script>
+
+{% endblock body %}
