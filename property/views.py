@@ -39,8 +39,19 @@ class PropertyDetail(FormMixin,DetailView):
         
         
         
-class AddListing(CreateView):
-    pass        
+class NewProperty(CreateView):
+    model = Property
+    form_class =PropertyBookForm
+    
+    
+    def post(self,request,*args,**kwargs):
+        form = self.get_form()
+        
+        if form.is_valid():
+            myform = form.save(commit=False)
+            myform.owner = request.user
+            myform.save()
+            return redirect(redirect('property:property_list'))
     
 
 

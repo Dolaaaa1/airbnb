@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 from .tasks import send_mail_task
-from .models import Settings
+from .models import Settings ,NewsLetter
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -95,3 +96,12 @@ def dashboard(request):
         'booking':booking,
  
           })
+    
+    
+    
+    
+def news_letter_subscribe(request):
+    email = request.POST.get('emailInput') 
+    NewsLetter.objects.create(email=email)  
+    
+    return JsonResponse ({'done':'done'})

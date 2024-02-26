@@ -143,11 +143,12 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            
-            {% for place in places_list %}                
+
+            {% for place in places_list %}
             <div class="col-sm col-md-6 col-lg ftco-animate">
                 <div class="destination">
-                    <a href="{{place.get_absolute_url}}" class="img img-2 d-flex justify-content-center align-items-center"
+                    <a href="{{place.get_absolute_url}}"
+                        class="img img-2 d-flex justify-content-center align-items-center"
                         style="background-image: url({{place.image.url}});">
                         <div class="icon d-flex justify-content-center align-items-center">
                             <span class="icon-search2"></span>
@@ -246,11 +247,12 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            
+
             {% for hotel in hotels_list  %}
             <div class="col-sm-6 col-md-6 col-lg-6 ftco-animate">
                 <div class="destination">
-                    <a href="{{hotel.get_absolute_url}}" class="img img-2 d-flex justify-content-center align-items-center"
+                    <a href="{{hotel.get_absolute_url}}"
+                        class="img img-2 d-flex justify-content-center align-items-center"
                         style="background-image: url({{hotel.image.url}});">
                         <div class="icon d-flex justify-content-center align-items-center">
                             <span class="icon-search2"></span>
@@ -369,11 +371,12 @@
             </div>
         </div>
         <div class="row">
-            
+
             {% for resturant in resturant_list %}
             <div class="col-md-6 col-lg-3 ftco-animate">
                 <div class="destination">
-                    <a href="{{resturant.get_absolute_url}}" class="img img-2 d-flex justify-content-center align-items-center"
+                    <a href="{{resturant.get_absolute_url}}"
+                        class="img img-2 d-flex justify-content-center align-items-center"
                         style="background-image: url({{resturant.image.url}});">
                         <div class="icon d-flex justify-content-center align-items-center">
                             <span class="icon-search2"></span>
@@ -413,8 +416,8 @@
             </div>
         </div>
         <div class="row d-flex">
-            
-            {% for post  in recent_posts %}                
+
+            {% for post  in recent_posts %}
             <div class="col-md-3 d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
                     <a href="blog-single.html" class="block-20" style="background-image: url({{post.image.url}});">
@@ -439,23 +442,52 @@
     <div class="parallax-img d-flex align-items-center">
         <div class="container">
             <div class="row d-flex justify-content-center">
-                <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                <div id="main_form_div" class="col-md-7 text-center heading-section heading-section-white ftco-animate">
                     <h2>Subcribe to our Newsletter</h2>
                     <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
                         live the blind texts. Separated they live in</p>
                     <div class="row d-flex justify-content-center mt-5">
                         <div class="col-md-8">
-                            <form action="#" class="subscribe-form">
+                            <form id="newslette_form" action="{% url 'home:newsletter'%}" class="subscribe-form"
+                                method="POST">
+                                {% csrf_token %}
                                 <div class="form-group d-flex">
-                                    <input type="text" class="form-control" placeholder="Enter email address">
+                                    <input type="text" class="form-control" name="emailInput"
+                                        placeholder="Enter email address">
                                     <input type="submit" value="Subscribe" class="submit px-3">
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+                <div id="success_div" style="display:none;" class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                    <h2>Subcribe Succeffuly</h2>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+<script>
+    $("#newslette_form").submit(function (e) {
+        e.preventDefault();
+        var form = $(this));
+        var url = form.attr("action");
+
+      $.ajax({
+          type: "POST",
+          url: url,
+          data: form.serialize(),
+          success: function (data) {
+             document.getElementById('main_form_div').style.display = "none";
+             document.getElementById('success_div').style.display = "block";
+            }
+        })
+    })
+</script>
+
 {% endblock body %}
