@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
     'tof',
+    'coverage',
     
 
 ]
@@ -158,8 +159,9 @@ LANGUAGES = [
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static", "staticroot")
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    "/var/www/static/",
+    os.path.join(BASE_DIR, "static")
+   # BASE_DIR / "static",
+    #"/var/www/static/",
 ]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
